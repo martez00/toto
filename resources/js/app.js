@@ -1,3 +1,5 @@
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';

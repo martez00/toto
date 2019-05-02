@@ -1,19 +1,27 @@
 <template>
     <div>
-        <div class="alert alert-danger" v-if="error">
-            <p>There was an error, unable to sign in with those credentials.</p>
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Prisijungimas prie sistemos</h5>
+                        <form autocomplete="off" @submit.prevent="login" method="post">
+                            <div class="form-label-group">
+                                <label for="email">El. paštas</label>
+                                <input type="email" id="email" class="form-control" placeholder="Email address" v-model="email" required autofocus>
+                            </div>
+
+                            <div class="form-label-group">
+                                <label for="password">Slaptažodis</label>
+                                <input type="password" id="password" class="form-control" placeholder="Password" v-model="password" required>
+                            </div>
+                            <hr class="my-4">
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Prisijungti</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form autocomplete="off" @submit.prevent="login" method="post">
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" v-model="password" required>
-            </div>
-            <button type="submit" class="btn btn-default">Sign in</button>
-        </form>
     </div>
 </template>
 <script>
