@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 
 Route::post('auth/register', 'AuthController@register');
 Route::post('auth/login', 'AuthController@login');
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('users', 'UserController@index')->middleware('isAdmin');
+    Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
+});
 Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('auth/user', 'AuthController@user');
     Route::post('auth/logout', 'AuthController@logout');

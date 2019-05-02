@@ -63,4 +63,9 @@ class AuthController extends Controller
             'msg' => 'Logged out Successfully.'
         ], 200);
     }
+
+    private function guard()
+    {
+        return Auth::guard();
+    }
 }
