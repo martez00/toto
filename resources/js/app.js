@@ -12,6 +12,9 @@ import Home from './components/Home.vue';
 import Register from './components/Register.vue';
 import Login from './components/Login.vue';
 import Page403 from './components/Page403.vue';
+import Toastr from 'vue-toastr';
+// import toastr scss file: need webpack sass-loader
+require('vue-toastr/src/vue-toastr.scss');
 import auth from './auth'
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -31,7 +34,7 @@ const router = new VueRouter({
         },
         {
             path: '/403',
-            name: '403',
+            name: 'Page403',
             component: Page403,
             meta: {
                 auth: undefined
@@ -83,5 +86,7 @@ const router = new VueRouter({
 });
 Vue.router = router
 Vue.use(VueAuth, auth);
+// Register plugin
+Vue.use(Toastr, { defaultPosition: "toast-top-center" });
 App.router = Vue.router
 new Vue(App).$mount('#app');

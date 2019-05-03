@@ -53,7 +53,8 @@
                         this.$router.push({name: redirectTo})
                     },
                     error: function() {
-                        app.has_error = true
+                        app.has_error = true;
+                        this.$toastr.e("Vartotojas su Jūsų įvestais prisijungimo duomenimis neegzistuoja!");
                     },
                     rememberMe: true,
                     fetchUser: true
