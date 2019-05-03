@@ -11,6 +11,7 @@ import AdminUsers from './components/admin/Users.vue';
 import Home from './components/Home.vue';
 import Register from './components/Register.vue';
 import Login from './components/Login.vue';
+import Page403 from './components/Page403.vue';
 import auth from './auth'
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -24,6 +25,14 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: Home,
+            meta: {
+                auth: undefined
+            }
+        },
+        {
+            path: '/403',
+            name: '403',
+            component: Page403,
             meta: {
                 auth: undefined
             }
