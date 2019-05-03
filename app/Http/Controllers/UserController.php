@@ -23,5 +23,14 @@ class UserController extends Controller
                 'user' => $user->toArray()
             ], 200);
     }
-
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return response()->json(
+            [
+                'status' => 'success',
+                'user' => $user->toArray()
+            ], 200);
+    }
 }

@@ -6,12 +6,12 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Prisijungimas prie sistemos</h5>
                         <form autocomplete="off" @submit.prevent="login" method="post">
-                            <div class="form-label-group">
+                            <div class="form-group">
                                 <label for="email">El. paštas</label>
                                 <input type="email" id="email" class="form-control" placeholder="Email address" v-model="email" required autofocus>
                             </div>
 
-                            <div class="form-label-group">
+                            <div class="form-group">
                                 <label for="password">Slaptažodis</label>
                                 <input type="password" id="password" class="form-control" placeholder="Password" v-model="password" required>
                             </div>

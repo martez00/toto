@@ -6,14 +6,18 @@
         <div class="alert alert-danger" v-if="has_error">
             <p>Klaida! Nepavyko gauti vartotojų sąrašo.</p>
         </div>
+                <button type="button" class="btn btn-primary btn-sm" style="margin-bottom:5px;" @click="showModal">Pridėti naują vartotoją</button>
+                <CreateUser v-show="isModalVisible" @close="closeModal"/>
         <table class="table">
             <tr>
+                <th scope="col"></th>
                 <th scope="col">ID</th>
                 <th scope="col">Vartotojo vardas</th>
                 <th scope="col">El. paštas</th>
                 <th scope="col">Registracijos data</th>
             </tr>
-            <tr v-for="user in sortedUsers" v-bind:key="user.id" style="margin-bottom: 5px;">
+            <tr v-for="(user, index) in sortedUsers" v-bind:index="index" v-bind:key="user.id" style="margin-bottom: 5px;">
+                <td><button type="button" class="btn btn-danger btn-sm" @click="deleteData(user.id, index)">X</button></td>
                 <th scope="row">{{ user.id }}</th>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
@@ -29,14 +33,19 @@
     </div>
 </template>
 <script>
+    import CreateUser from './CreateUser.vue';
     export default {
         data() {
             return {
                 has_error: false,
                 users: [],
                 pageSize:20,
-                currentPage:1
+                currentPage:1,
+                isModalVisible: false
             }
+        },
+        components: {
+            CreateUser,
         },
         mounted() {
             this.getUsers();
@@ -53,11 +62,27 @@
                         this.has_error = true
                     })
             },
+            deleteData: function(id, index) {
+                this.$http({
+                    url: 'user/'+id,
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        this.users.splice(index, 1);
+                    });
+            },
             nextPage:function() {
                 if((this.currentPage*this.pageSize) < this.users.length) this.currentPage++;
             },
             prevPage:function() {
                 if(this.currentPage > 1) this.currentPage--;
+            },
+            showModal() {
+                this.isModalVisible = true;
+            },
+            closeModal() {
+                this.isModalVisible = false;
+                this.getUsers();
             }
         },
         computed: {
