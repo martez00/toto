@@ -7,6 +7,7 @@ import VueAuth from '@websanova/vue-auth'
 import App from './App.vue';
 import UserDashboard from './components/user/Dashboard.vue';
 import AdminDashboard from './components/admin/Dashboard.vue';
+import AdminUsers from './components/admin/Users.vue';
 import Home from './components/Home.vue';
 import Register from './components/Register.vue';
 import Login from './components/Login.vue';
@@ -60,7 +61,16 @@ const router = new VueRouter({
             meta: {
                 auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
             }
-        },]
+        },
+        {
+            path: '/users',
+            name: 'admin.users',
+            component: AdminUsers,
+            meta: {
+                auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
+            }
+        },
+    ]
 });
 Vue.router = router
 Vue.use(VueAuth, auth);

@@ -33,7 +33,7 @@
                     // LOGGED ADMIN
                     admin: [
                         {
-                            name: 'Administravimo panelė',
+                            name: 'Sistemos administravimas',
                             path: 'admin.dashboard'
                         }
                     ]
