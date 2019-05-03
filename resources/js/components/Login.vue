@@ -17,6 +17,7 @@
                             </div>
                             <hr class="my-4">
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Prisijungti</button>
+                            <center><router-link :to="{ name: 'register' }">Dar neturi susikūręs vartotojo? Užsiregistruok!</router-link></center>
                         </form>
                     </div>
                 </div>
