@@ -55,7 +55,7 @@
         display: inline-block;
         width: 140px;
         height: 140px;
-        background-image: url('../../../public/images/emoji.png');
+        background-image: url('../../../storage/app/public/images/system/emoji.png');
         background-size: cover;
     }
 
