@@ -8,10 +8,10 @@
                     {{ $auth.user().name }}
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <router-link  :to="{ name : route.path }" :key="key" v-if="$auth.check()" v-for="(route, key) in routes.user" v-bind:key="route.path"><a class="dropdown-item">
+                    <router-link  :to="{ name : route.path }"  v-if="$auth.check()" v-for="(route, key) in routes.user" v-bind:key="route.path"><a class="dropdown-item">
                         {{route.name}}
                     </a></router-link>
-                    <router-link  :to="{ name : route.path }" :key="key"  v-if="$auth.check(1)" v-for="(route, key) in routes.admin" v-bind:key="route.path"><a class="dropdown-item">
+                    <router-link  :to="{ name : route.path }"  v-if="$auth.check(1)" v-for="(route, key) in routes.admin" v-bind:key="route.path"><a class="dropdown-item">
                         {{route.name}}
                     </a></router-link>
                     <a class="dropdown-item" v-if="$auth.check()" @click.prevent="$auth.logout()">Atsijungti</a>

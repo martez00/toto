@@ -2,7 +2,7 @@
     <transition name="CreateUser">
         <div class="modal-mask">
             <div class="modal-wrapper">
-                <form autocomplete="off" @submit.prevent="register" v-if="!success" method="post">
+                <form autocomplete="off" @submit.prevent="register" method="post">
                 <div class="modal-container">
 
                     <div class="modal-header">
@@ -57,7 +57,7 @@
             };
         },
         methods: {
-            register(){
+            register() {
                 var app = this
                 this.$auth.register({
                     data: {
@@ -77,6 +77,11 @@
                 });
             },
             close(){
+                this.errors = {};
+                this.name = '';
+                this.email = '';
+                this.password = '';
+                this.error = false;
                 this.$emit('close');
             }
         },

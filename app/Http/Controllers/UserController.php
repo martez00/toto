@@ -33,4 +33,18 @@ class UserController extends Controller
                 'user' => $user->toArray()
             ], 200);
     }
+    public function update(Request $request, $id){
+        $user = User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        if($user->save()){
+            return response([
+                'status' => 'success',
+                'data' => $user
+            ]);
+        }
+        return response([
+            'status' => 'error'
+        ]);
+    }
 }
