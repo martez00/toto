@@ -9,6 +9,6 @@
 </head>
 <body>
     <div id="app"></div>
-<script src="/js/app.js"></script>
+<script src="<?php echo asset('js/app.js')?>"></script>
 </body>
 </html>
