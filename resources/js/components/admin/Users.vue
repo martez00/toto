@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <center><a @click="$router.go(-1)" class="btn btn-sm btn-outline-primary " style="margin-bottom:5px"><img :src="images.back" class="delete_button"> ATGAL</a></center>
+        <BackModal/>
         <div class="card card-default">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -8,7 +8,7 @@
                         <a class="nav-link disabled active">Vartotojai</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:#007bff" @click="showModal">Pridėti naują vartotoją</a>
+                        <a class="nav-link" style="color:#007bff; cursor: pointer" @click="showModal">Pridėti naują vartotoją</a>
                     </li>
                 </ul>
             </div>
@@ -37,7 +37,7 @@
                             <td style="vertical-align:middle">{{ user.name }}</td>
                             <td style="vertical-align:middle">{{ user.email }}</td>
                             <td style="vertical-align:middle">{{ user.created_at}}</td>
-                            <td style="vertical-align:middle"><button type="button" class="btn btn-sm" @click="confirmDelete(user)"><img :src="images.delete" class="delete_button"></button><button @click="showEditModal(user)">EDIT</button></td>
+                            <td style="vertical-align:middle"><button type="button" class="btn btn-sm pointer-event" @click="confirmDelete(user)"><img :src="images.delete" class="delete_button"></button><button @click="showEditModal(user)" class="btn btn-sm"><img :src="images.edit" class="delete_button"></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -55,6 +55,7 @@
     import CreateUser from './CreateUser.vue';
     import UserDeleteConfirmationModal from './UserDeleteConfirmationModal.vue';
     import UserEditModal from './UserEditModal.vue';
+    import BackModal from '../Back.vue';
     let axios = require('axios');
     export default {
         data() {
@@ -70,14 +71,15 @@
                 selectedEditUser: null,
                 images: {
                     delete: require('../../../../storage/app/public/images/system/delete.png'),
-                    back: require('../../../../storage/app/public/images/system/back.png')
+                    edit: require('../../../../storage/app/public/images/system/edit.png')
                 }
             }
         },
         components: {
             CreateUser,
             UserDeleteConfirmationModal,
-            UserEditModal
+            UserEditModal,
+            BackModal,
         },
         mounted() {
             this.getUsers();

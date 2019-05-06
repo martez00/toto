@@ -1,34 +1,44 @@
 <template>
     <div class="container">
-        <div class="card card-default">
-            <div class="card-header">SISTEMOS ADMINISTRAVIMAS</div>
+        <BackModal/>
+        <div class="card card-default box-shadow">
+            <div class="card-header">Sistemos administravimas</div>
             <div class="card-body">
-                <div class="card-deck mb-3 text-center">
-                    <div class="card mb-4 box-shadow">
+                <div class="card-deck mb-sm-0 text-center">
+                    <div class="card mb-sm-4">
                         <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">VARTOTOJAI</h4>
+                            <h6 class="my-sm-0 font-weight-normal"><b>Vartotojai</b></h6>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">{{ users_count }} <small class="text-muted">vartotojai (-ų)</small></h1>
-                            <router-link :to="{ name: 'admin.users' }"><button type="button" class="btn btn-lg btn-block btn-primary">ADMINISTRAVIMAS</button></router-link>
+                            <h5 class="card-title">{{ users_count }} <small class="text-muted">vartotojai (-ų)</small></h5>
+                            <router-link :to="{ name: 'admin.users' }"><button type="button" class="btn btn-sm btn-block btn-primary">ADMINISTRAVIMAS</button></router-link>
                         </div>
                     </div>
-                    <div class="card mb-4 box-shadow">
+                    <div class="card mb-sm-4">
                         <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">Pro</h4>
+                            <h6 class="my-sm-0 font-weight-normal"><b>Įrašai</b></h6>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
-                            <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+                            <h5 class="card-title">{{ 1234 }} <small class="text-muted">kažko (-ų)</small></h5>
+                            <router-link :to="{ name: 'admin.users' }"><button type="button" class="btn btn-sm btn-block btn-primary">ADMINISTRAVIMAS</button></router-link>
                         </div>
                     </div>
-                    <div class="card mb-4 box-shadow">
+                    <div class="card mb-sm-4">
                         <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">Enterprise</h4>
+                            <h6 class="my-sm-0 font-weight-normal"><b>Kažkas</b></h6>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-                            <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+                            <h5 class="card-title">{{ 1234 }} <small class="text-muted">kažko (-ų)</small></h5>
+                            <router-link :to="{ name: 'admin.users' }"><button type="button" class="btn btn-sm btn-block btn-primary">ADMINISTRAVIMAS</button></router-link>
+                        </div>
+                    </div>
+                    <div class="card mb-sm-4">
+                        <div class="card-header">
+                            <h6 class="my-sm-0 font-weight-normal"><b>Kažkas</b></h6>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ 1234 }} <small class="text-muted">kažko (-ų)</small></h5>
+                            <router-link :to="{ name: 'admin.users' }"><button type="button" class="btn btn-sm btn-block btn-primary">ADMINISTRAVIMAS</button></router-link>
                         </div>
                     </div>
                 </div>
@@ -37,7 +47,11 @@
     </div>
 </template>
 <script>
+    import BackModal from '../Back.vue';
     export default {
+        components: {
+            BackModal,
+        },
         data() {
             return {
                 has_error: false,
