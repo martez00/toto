@@ -18,6 +18,14 @@ class PostController extends Controller
         if($request->limit)
             $posts = Post::with('user')->orderBy('created_at', 'DESC')->take($request->limit)->get();
         else $posts = Post::with('user')->get();
+        if($request->return_post_count){
+            $posts_count = $posts->count();
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'posts_count' => $posts_count,
+                ], 200);
+        }
         return response()->json(
             [
                 'status' => 'success',

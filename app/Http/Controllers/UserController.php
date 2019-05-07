@@ -4,9 +4,17 @@ use App\User;
 use Illuminate\Http\Request;
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $users = User::all();
+        if($request->return_users_count){
+            $users_count = $users->count();
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'users_count' => $users_count,
+                ], 200);
+        }
         return response()->json(
             [
                 'status' => 'success',

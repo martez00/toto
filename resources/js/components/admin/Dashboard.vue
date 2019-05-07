@@ -68,25 +68,27 @@
 
         methods: {
             getUsersCount() {
-                this.$http({
-                    url: 'users',
-                    method: 'GET'
+                axios.get('users', {
+                    params: {
+                        return_users_count: 1
+                    }
                 })
                     .then((res) => {
-                        if(res.data.users)
-                            this.users_count = res.data.users.length;
-                        else this.users_count=0;
+                            this.users_count = res.data.users_count;
                     }, () => {
                         this.has_error = true;
                     })
             },
             getPostsCount() {
-                axios.get('posts')
+                axios.get('posts', {
+                    params: {
+                        return_post_count: 1
+                    }
+                })
                     .then(res => {
-                        this.posts_count = res.data.posts.length;
+                        this.posts_count = res.data.posts_count;
                     })
                     .catch(e => {
-                        console.log(e);
                         this.has_error = true;
                     });
             }
