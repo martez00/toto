@@ -12,14 +12,18 @@ import Home from './components/Home.vue';
 import Register from './components/Register.vue';
 import Login from './components/Login.vue';
 import Page403 from './components/Page403.vue';
+import AdminPosts from './components/admin/posts/Posts.vue';
+import AdminCreatePost from './components/admin/posts/CreatePost.vue';
 import Toastr from 'vue-toastr';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 // import toastr scss file: need webpack sass-loader
 require('vue-toastr/src/vue-toastr.scss');
 import auth from './auth'
+Vue.use(CKEditor);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
-import axios from 'axios';
-axios.defaults.baseURL = 'http://toto.test/api';
+import axios from 'axios'
+axios.defaults.baseURL = '/api';
 const router = new VueRouter({
     history: true,
     mode: 'history',
@@ -78,6 +82,22 @@ const router = new VueRouter({
             path: '/users',
             name: 'admin.users',
             component: AdminUsers,
+            meta: {
+                auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
+            }
+        },
+        {
+            path: '/posts',
+            name: 'admin.posts',
+            component: AdminPosts,
+            meta: {
+                auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
+            }
+        },
+        {
+            path: '/posts/create',
+            name: 'admin.createpost',
+            component: AdminCreatePost,
             meta: {
                 auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
             }

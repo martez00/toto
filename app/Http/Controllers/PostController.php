@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with('user')->get();
+        return response()->json(
+            [
+                'status' => 'success',
+                'posts' => $posts->toArray(),
+            ], 200);
     }
 
     /**
@@ -35,7 +41,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->title = $request->title;
+        $post->caption = $request->caption;
+        $post->body = $request->body;
+        $post->user_id = Auth::user()->id;
+        $post->save();
+        return response([
+            'status' => 'success',
+            'data' => $post
+        ], 200);
     }
 
     /**
@@ -78,8 +93,14 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return response()->json(
+            [
+                'status' => 'success',
+                'post' => $post->toArray()
+            ], 200);
     }
 }

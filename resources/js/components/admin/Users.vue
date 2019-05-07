@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <BackModal/>
-        <div class="card card-default">
+        <div class="card card-default box-shadow">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
