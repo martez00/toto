@@ -13,9 +13,11 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('user')->get();
+        if($request->limit)
+            $posts = Post::with('user')->orderBy('created_at', 'DESC')->take($request->limit)->get();
+        else $posts = Post::with('user')->get();
         return response()->json(
             [
                 'status' => 'success',
@@ -46,6 +48,17 @@ class PostController extends Controller
         $post->caption = $request->caption;
         $post->body = $request->body;
         $post->user_id = Auth::user()->id;
+        if($request->hasFile('image')){
+            $filenameWithExt=$request->file('image')->getClientOriginalName();
+            $filename=pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension=$request->file('image')->getClientOriginalExtension();
+            $filenameToStore=$filename.'_'.time().'.'.$extension;
+            $path=$request->file('image')->storeAs('public/images/post_images', $filenameToStore);
+        }
+        else {
+            $filenameToStore="noimage.jpg";
+        }
+        $post->image = $filenameToStore;
         $post->save();
         return response([
             'status' => 'success',

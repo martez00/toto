@@ -1,4 +1,5 @@
-<template><div>
+<template>
+    <div>
     <header class="bg-primary py-5 mb-5">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
@@ -39,36 +40,12 @@
     <!-- /.row -->
 
     <div class="row">
-        <div class="col-md-4 mb-5">
+        <div v-for="(post, index) in posts" v-bind:index="index" v-bind:key="post.id" class="col-md-4 mb-5">
             <div class="card h-100">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+                <img class="card-img-top" v-if="post.image" :src="'storage/images/post_images/'+post.image" alt="">
                 <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <p class="card-text">{{ post.caption }}</p>
                 </div>
                 <div class="card-footer">
                     <a href="#" class="btn btn-primary">Find Out More!</a>
@@ -90,3 +67,33 @@
     </footer>
 </div>
 </template>
+<script>
+    let axios = require('axios');
+    export default {
+        name: "Posts",
+        data() {
+            return {
+                posts: []
+            }
+        },
+        mounted() {
+            this.getPosts();
+        },
+        methods: {
+            getPosts() {
+                axios.get('posts', {
+                    params: {
+                        limit: 3
+                    }
+                })
+                    .then(res => {
+                        this.posts = res.data.posts;
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        this.has_error = true;
+                    });
+            }
+        }
+    }
+</script>
