@@ -15,22 +15,39 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->limit)
-            $posts = Post::with('user')->orderBy('created_at', 'DESC')->take($request->limit)->get();
-        else $posts = Post::with('user')->get();
-        if($request->return_post_count){
-            $posts_count = $posts->count();
+        if ($request->limit || $request->return_post_count) {
+            if ($request->limit)
+                $posts = Post::with('user')->orderBy('created_at', 'DESC')->take($request->limit)->get();
+            else $posts = Post::with('user')->get();
+            if ($request->return_post_count) {
+                $posts_count = $posts->count();
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'posts_count' => $posts_count,
+                    ], 200);
+            }
             return response()->json(
                 [
                     'status' => 'success',
-                    'posts_count' => $posts_count,
+                    'posts' => $posts->toArray(),
                 ], 200);
         }
-        return response()->json(
-            [
-                'status' => 'success',
-                'posts' => $posts->toArray(),
-            ], 200);
+        else {
+            $posts = Post::with('user')->orderBy('id', 'DESC')->paginate(20);
+            $response = [
+                'pagination' => [
+                    'total' => $posts->total(),
+                    'per_page' => $posts->perPage(),
+                    'current_page' => $posts->currentPage(),
+                    'last_page' => $posts->lastPage(),
+                    'from' => $posts->firstItem(),
+                    'to' => $posts->lastItem()
+                ],
+                'data' => $posts
+            ];
+            return response()->json($response);
+        }
     }
 
     /**
