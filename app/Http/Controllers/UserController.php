@@ -15,11 +15,21 @@ class UserController extends Controller
                     'users_count' => $users_count,
                 ], 200);
         }
-        return response()->json(
-            [
-                'status' => 'success',
-                'users' => $users->toArray()
-            ], 200);
+        else {
+            $users = User::paginate(20);
+            $response = [
+                'pagination' => [
+                    'total' => $users->total(),
+                    'per_page' => $users->perPage(),
+                    'current_page' => $users->currentPage(),
+                    'last_page' => $users->lastPage(),
+                    'from' => $users->firstItem(),
+                    'to' => $users->lastItem()
+                ],
+                'data' => $users
+            ];
+            return response()->json($response);
+        }
     }
 
     public function show(Request $request, $id)

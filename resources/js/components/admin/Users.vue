@@ -32,7 +32,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(user, index) in sortedUsers" v-bind:index="index" v-bind:key="user.id" style="margin-bottom: 5px;">
+                        <tr v-for="(user, index) in users" v-bind:index="index" v-bind:key="user.id" style="margin-bottom: 5px;">
                             <th scope="row" style="vertical-align:middle">{{ user.id }}</th>
                             <td style="vertical-align:middle">{{ user.name }}</td>
                             <td style="vertical-align:middle">{{ user.email }}</td>
@@ -43,10 +43,7 @@
                     </table>
 
                 </div>
-                <div  v-if="users.length>20">
-                   <center><button  class="btn btn-primary btn-sm" @click="prevPage">Praėjęs</button>
-                    <button  class="btn btn-primary btn-sm" @click="nextPage">Kitas</button></center>
-                </div>
+                <Pagination v-if="pagination.last_page > 1" :pagination="pagination" :offset="5" @paginate="getUsers()"/>
     </div>
         </div>
     </div>
@@ -56,19 +53,22 @@
     import UserDeleteConfirmationModal from './UserDeleteConfirmationModal.vue';
     import UserEditModal from './UserEditModal.vue';
     import BackModal from '../Back.vue';
+    import Pagination from '../system/PaginationComponent.vue';
     let axios = require('axios');
     export default {
         data() {
             return {
                 has_error: false,
                 users: [],
-                pageSize:20,
-                currentPage:1,
                 isModalVisible: false,
                 confirmModal: false,
                 editModalvisible: false,
                 selectedUser: null,
                 selectedEditUser: null,
+                pagination: {
+                    'current_page': 1,
+                    'last_page': null
+                },
                 images: {
                     delete: require('../../../../storage/app/public/images/system/delete.png'),
                     edit: require('../../../../storage/app/public/images/system/edit.png')
@@ -80,21 +80,21 @@
             UserDeleteConfirmationModal,
             UserEditModal,
             BackModal,
+            Pagination,
         },
         mounted() {
             this.getUsers();
         },
         methods: {
             getUsers() {
-                this.$http({
-                    url: 'users',
-                    method: 'GET'
-                })
-                    .then((res) => {
-                        this.users = res.data.users
-                    }, () => {
-                        this.has_error = true
+                axios.get('users?page=' + this.pagination.current_page)
+                    .then(response => {
+                        this.users = response.data.data.data;
+                        this.pagination = response.data.pagination;
                     })
+                    .catch(error => {
+                        console.log(error.response.data);
+                    });
             },
             confirmDelete(u, index) {
                 this.selectedUser = u;
@@ -111,18 +111,10 @@
                     method: 'DELETE'
                 })
                     .then(response => {
-                        const index = this.users.findIndex(user => user.id === tmp_id); // find the post index
-                        if (~index) // if the post exists in array
-                            this.users.splice(index, 1) //delete the post
+                        this.getUsers();
                     });
                 this.selectedUser = null;
                 this.confirmModal = false;
-            },
-            nextPage:function() {
-                if((this.currentPage*this.pageSize) < this.users.length) this.currentPage++;
-            },
-            prevPage:function() {
-                if(this.currentPage > 1) this.currentPage--;
             },
             showModal() {
                 this.isModalVisible = true;
@@ -152,15 +144,6 @@
                     .catch(e => {
                         console.log(e);
                     });
-            }
-        },
-        computed: {
-            sortedUsers: function () {
-                return this.users.filter((row, index) => {
-                    let start = (this.currentPage - 1) * this.pageSize;
-                    let end = this.currentPage * this.pageSize;
-                    if (index >= start && index < end) return true;
-                });
             }
         }
     }
