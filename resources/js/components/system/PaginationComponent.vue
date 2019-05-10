@@ -1,13 +1,19 @@
 <template>
-    <nav class="pagination d-flex justify-content-center" role="navigation" aria-label="pagination">
-        <a class="btn btn-outline-primary" style="margin-right:5px; float:left" @click.prevent="changePage(1)" :disabled="pagination.current_page <= 1">Pirmas</a>
-        <a class="btn btn-outline-primary" style="margin-right:5px; float:left" @click.prevent="changePage(pagination.current_page - 1)" :disabled="pagination.current_page <= 1">Praėjęs</a>
-        <div v-for="page in pages">
-            <a class="btn btn-outline-primary" style="margin-left:2px; float:left" :class="isCurrentPage(page) ? 'btn-success' : ''" @click.prevent="changePage(page)">{{ page }}</a>
+    <div class="row pagination" role="navigation" aria-label="pagination">
+        <div class="col-md-auto">
+            <a class="btn btn-outline-primary" style="margin-right:5px; float:left" @click.prevent="changePage(1)" :disabled="pagination.current_page <= 1">Pirmas</a>
+            <a class="btn btn-outline-primary" style="margin-right:5px; float:left" @click.prevent="changePage(pagination.current_page - 1)" :disabled="pagination.current_page <= 1">Praėjęs</a>
         </div>
-        <a class="btn btn-outline-primary" style="margin-right:5px; margin-left:5px; float:left" @click.prevent="changePage(pagination.current_page + 1)" :disabled="pagination.current_page >= pagination.last_page">Kitas</a>
-        <a class="btn btn-outline-primary" style="float:left" @click.prevent="changePage(pagination.last_page)" :disabled="pagination.current_page >= pagination.last_page">Paskutinis</a>
-    </nav>
+        <div class="col-md-3 mx-auto">
+            <div v-for="page in pages">
+                <a class="btn btn-outline-primary" style="margin-left:2px; float:left" :class="isCurrentPage(page) ? 'btn-success' : ''" @click.prevent="changePage(page)">{{ page }}</a>
+            </div>
+        </div>
+        <div class="col-md-auto">
+            <a class="btn btn-outline-primary" style="margin-right:5px; float:left" @click.prevent="changePage(pagination.current_page + 1)" :disabled="pagination.current_page >= pagination.last_page">Kitas</a>
+            <a class="btn btn-outline-primary" style="float:left" @click.prevent="changePage(pagination.last_page)" :disabled="pagination.current_page >= pagination.last_page">Paskutinis</a>
+        </div>
+    </div>
 </template>
 
 <style>
