@@ -27,6 +27,11 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@websanova/vue-auth": "^2.21.14-beta"
+        "@ckeditor/ckeditor5-build-classic": "^12.1.0",
+        "@ckeditor/ckeditor5-vue": "^1.0.0-beta.2",
+        "@websanova/vue-auth": "^2.21.14-beta",
+        "vue-nprogress": "^0.1.5",
+        "vue-toastr": "^2.0.16",
+        "vuejs-paginator": "^2.0.2"
     }
 }
