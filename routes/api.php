@@ -22,8 +22,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
     Route::delete('post/{id}', 'PostController@destroy')->middleware('isAdmin');
     Route::post('posts', 'PostController@store')->middleware('isAdmin');
+    Route::post('teams', 'TeamController@store')->middleware('isAdmin');
+    Route::delete('team/{id}', 'TeamController@destroy')->middleware('isAdmin');
 });
 Route::get('posts', 'PostController@index');
+Route::get('teams', 'TeamController@index');
 Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('auth/user', 'AuthController@user');
     Route::post('auth/logout', 'AuthController@logout');

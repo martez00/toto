@@ -14,6 +14,8 @@ import Login from './components/Login.vue';
 import Page403 from './components/Page403.vue';
 import AdminPosts from './components/admin/posts/Posts.vue';
 import AdminCreatePost from './components/admin/posts/CreatePost.vue';
+import AdminTeams from './components/admin/toto/Teams.vue';
+import AdminCreateTeam from './components/admin/toto/CreateTeam.vue';
 import Toastr from 'vue-toastr';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 // import toastr scss file: need webpack sass-loader
@@ -98,6 +100,22 @@ const router = new VueRouter({
             path: '/posts/create',
             name: 'admin.createpost',
             component: AdminCreatePost,
+            meta: {
+                auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
+            }
+        },
+        {
+            path: '/createteam',
+            name: 'admin.createteam',
+            component: AdminCreateTeam,
+            meta: {
+                auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
+            }
+        },
+        {
+            path: '/teams',
+            name: 'admin.teams',
+            component: AdminTeams,
             meta: {
                 auth: {roles: 1, redirect: {name: 'login'}, forbiddenRedirect: '/403'}
             }
